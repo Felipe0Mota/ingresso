@@ -14,42 +14,29 @@ function comprar() {
   if (isNaN(qtde) || qtde <= 0) {
     alert("Digite a quantidade de ingressos desejada!");
   } else {
-    //verificar se tem a quantidade de ingressos disponível
-    let restoPista = qtdPista.textContent - qtde;
-    let restoSup = qtdCadeiraSup.textContent - qtde;
-    let restoInf = qtdCadeiraSup.textContent - qtde;
-
     if (tipoCadeira == "pista") {
-      if (restoPista < 0) {
-        alert(`Temos apenas ${qtdPista.textContent} ingressos Pista disponíveis. 
-Escolha uma quantidade inferior ou igual`);
-        document.getElementById("qtd").value = "";
-      } else {
-        qtdPista.textContent = qtdPista.textContent - qtde;
-        document.getElementById("qtd").value = "";
-      }
+      compraIngresso("pista", qtdPista);
     }
 
     if (tipoCadeira == "superior") {
-      if (restoSup < 0) {
-        alert(`Temos apenas ${qtdCadeiraSup.textContent} ingressos Pista disponíveis. 
-Escolha uma quantidade inferior ou igual`);
-        document.getElementById("qtd").value = "";
-      } else {
-        qtdCadeiraSup.textContent = qtdCadeiraSup.textContent - qtde;
-        document.getElementById("qtd").value = "";
-      }
+      compraIngresso("superior", qtdCadeiraSup);
     }
 
     if (tipoCadeira == "inferior") {
-      if (restoInf < 0) {
-        alert(`Temos apenas ${qtdCadeiraInf.textContent} ingressos Pista disponíveis. 
-Escolha uma quantidade inferior ou igual`);
-        document.getElementById("qtd").value = "";
-      } else {
-        qtdCadeiraInf.textContent = qtdCadeiraInf.textContent - qtde;
-        document.getElementById("qtd").value = "";
-      }
+      compraIngresso("inferior", qtdCadeiraInf);
     }
+  }
+}
+
+function compraIngresso(tipo, ingressosTipo) {
+  let quantia = parseInt(document.getElementById("qtd").value);
+
+  if (quantia > ingressosTipo.textContent) {
+    alert(`Quantidade indisponível para ingresso ${tipo}`);
+    document.getElementById("qtd").value = "";
+  } else {
+    ingressosTipo.textContent = ingressosTipo.textContent - quantia;
+    document.getElementById("qtd").value = "";
+    alert('Compra realizada com sucesso');
   }
 }
